@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(\App\Http\Controllers\SchedulerController::class)->group(function () {
+    Route::get('/', 'index')->name('list');
+
+    Route::get('/import', function () {
+        return view('import');
+    })->name('import');
+    Route::post('/import', 'importFromFile');
+
+    Route::get('/add', function () {
+        return view('add');
+    })->name('add_activity');
+    Route::post('/add', 'store');
+
+    Route::get('/urnik/{activity}', 'show')
+        ->name('show')
+        ->where('activity', '[0-9]+');
 });
