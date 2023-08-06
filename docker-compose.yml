@@ -18,8 +18,8 @@ services:
         depends_on:
             mysql:
               condition: service_healthy
-        networks:
-            - my_service #if you're using networks between containers
+#        networks:
+#            - my_service #if you're using networks between containers
 
     webserver:
         image: nginx:latest
@@ -32,8 +32,8 @@ services:
           - ./deploy/etc/nginx/conf.d/:/etc/nginx/conf.d/
         depends_on:
           - php-fpm
-        networks:
-          - my_service
+#        networks:
+#          - my_service
 
     mysql:
         image: mariadb
@@ -49,8 +49,8 @@ services:
         volumes:
             - './mysql_data:/var/lib/mysql'
             - './deploy/create-database.sh:/docker-entrypoint-initdb.d/10-create-database.sh'
-        networks:
-            - my_service
+#        networks:
+#            - my_service
         healthcheck:
             test:
                 - CMD
@@ -62,6 +62,6 @@ services:
             timeout: 5s
 
 
-networks:
-  my_service:
-    external: true
+#networks:
+#  my_service:
+#    external: true
