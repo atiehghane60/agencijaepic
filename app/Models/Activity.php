@@ -10,6 +10,8 @@ class Activity extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function appointments(): HasMany {
         return $this->hasMany(Appointment::class);
     }

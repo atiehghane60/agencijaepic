@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('activity_id')->index()->nullable(false);
-            $table->date('start_date')->index()->nullable(false);
+//            $table->bigInteger('activity_id')->index()->nullable(false);
+            $table->foreignId('activity_id')->constrained()->onDelete('cascade');
+            $table->dateTime('start_date')->index()->nullable(false);
             $table->timestamps();
 
-            $table->foreignId('activity_id')->constrained()->onDelete('cascade');
         });
     }
 

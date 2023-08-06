@@ -7,6 +7,8 @@ use App\Http\Requests\SchedulerImportFileRequest;
 use App\Http\Requests\SchedulerManualAddRequest;
 use App\Imports\ActivityImport;
 use App\Interfaces\SchedulerRepositoryInterface;
+use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\View\View;
 
 class SchedulerController extends Controller
@@ -33,10 +35,14 @@ class SchedulerController extends Controller
     public function store(SchedulerManualAddRequest $request): \Illuminate\Http\RedirectResponse
     {
         $validatedRequestInfo = $request->validated();
+
+        foreach ($validatedRequestInfo['appointments'] as $appointmentInString)
+            $appointments[] = Carbon::createFromFormat("Y-m-d H:i", $appointmentInString);
+
         $this->schedulerRepository->addActivity(
             ActivityDTO::newInstance(
                 $validatedRequestInfo['name'],
-                $validatedRequestInfo['appointments'],
+                $appointments,
             )
         );
 
@@ -55,7 +61,7 @@ class SchedulerController extends Controller
         $activity = $this->schedulerRepository->getActivity((int)$activity);
 
         return $activity == null ?
-            redirect()->route('list')->with('message', 'Dejavnosti ni bilo mogoče najti'):
+            redirect()->route('list')->with('message', 'Dejavnosti ni bilo mogoče najti') :
             \view('activity', ['activity' => $activity]);
     }
 }

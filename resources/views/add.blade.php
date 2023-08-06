@@ -2,6 +2,7 @@
 
 @section('content')
     <form method="post" action="{{ route('add_activity') }}">
+        @csrf
         <div>
             <label for="name">ime:</label>
             <input name="name" id="name"/>

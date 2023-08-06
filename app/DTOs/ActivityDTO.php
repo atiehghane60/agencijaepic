@@ -37,6 +37,6 @@ class ActivityDTO
 
     public function toCollection(): Collection
     {
-        return collect((array)$this);
+        return collect(['name' => $this->name, 'appointments' => $this->appointments]);
     }
 }

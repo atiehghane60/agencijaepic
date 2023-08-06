@@ -42,9 +42,8 @@ class SchedulerRepository implements SchedulerRepositoryInterface
 
     public function addActivity(ActivityDTO $activity): bool
     {
-        $modelResult = $this->activityModel->newQuery()->create([
-            $activity->toCollection()->only($this->activityModel->getFillable())
-        ]);
+        $insertingActivity = $activity->toCollection()->only($this->activityModel->getFillable())->toArray();
+        $modelResult = $this->activityModel->newQuery()->create($insertingActivity);
 
         $appointments = [];
         foreach ($activity->appointments as $appointment)
