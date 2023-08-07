@@ -13,6 +13,7 @@ In order to run the project, you should:
 
 - make sure the docker is installed in your machine
 - make a copy of file .env.example with name .env
+- run command `composer install`
 - run command `./run_app.sh` in root directory of the project
 
 And the project will be accessible via [127.0.0.1](http://127.0.0.1).
